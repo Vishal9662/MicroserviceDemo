@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: student-service
+          uri: lb://student-service  # This uses Eureka to discover the service
+          predicates:
+            - Path=/student-service/**
+          filters:
+            - name: JwtAuthenticationFilter  # Custom filter for authentication
+
+        - id: teachers-service
+          uri: lb://teachers-service
+          predicates:
+            - Path=/teachers-service/**
+
+      discovery:
+        locator:
+          enabled: true  # Enable service discovery via Eureka
